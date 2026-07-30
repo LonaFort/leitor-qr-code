@@ -5,287 +5,266 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
-      :root {
-        --primary-color: #1976d2; 
-        --secondary-color: #f5f5f5;
-        --text-color: #333;
-        --border-radius: 12px;
-      }
-      body { 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        background-color: #e9ecef; margin: 0; display: flex;
-        justify-content: center; align-items: center; min-height: 100vh;
-        padding: 20px; box-sizing: border-box;
-      }
-      .card {
-        background-color: white; padding: 25px; border-radius: var(--border-radius);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15); width: 100%; max-width: 450px;
-        box-sizing: border-box;
-      }
-      h2 { color: var(--text-color); text-align: center; margin-top: 0; margin-bottom: 20px; font-weight: 600;}
-      #reader { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 2px solid #ddd; }
-      #btn-iniciar-camera {
-        padding: 12px; background-color: #0E6D64; color: white; border: none;
-        border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; font-size: 16px;
-      }
+      :root { --primary: #333; --bg: #f4f6f8; --text: #333; --border: 12px; }
+      body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: var(--bg); padding: 15px; margin: 0; display: flex; justify-content: center; }
+      .card { background: white; padding: 20px; border-radius: var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
       
-      /* Caixinha do nome do produto */
-      .produto-container { background-color: var(--secondary-color); padding: 15px; border-radius: var(--border-radius); text-align: center; margin-bottom: 20px; border: 1px solid #ddd; }
-      .produto-label { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-      .produto-destaque { color: var(--primary-color); font-size: 18px; font-weight: bold; margin: 0; transition: 0.3s; }
-      .produto-sucesso { color: #2e7d32; font-size: 20px; font-weight: bold; margin: 0; transition: 0.3s; }
+      h3 { text-align: center; margin-top: 0; color: var(--text); }
+      #reader { width: 100%; border-radius: 8px; margin-bottom: 15px; border: 2px solid #ddd; }
       
-      label { font-weight: 500; font-size: 14px; color: var(--text-color); display: block; margin-top: 15px; margin-bottom: 5px; }
-      input[type="text"], input[type="number"], select, textarea {
-        width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px;
-        box-sizing: border-box; font-size: 16px; background-color: #fafafa;
-      }
-      textarea { resize: vertical; min-height: 80px; }
-      .row { display: flex; gap: 10px; } 
-      .col { flex: 1; }
-      .caixa-troca { background-color: #fff8e1; border: 1px solid #ffe082; padding: 20px; border-radius: var(--border-radius); margin-top: 25px; }
-      .radio-group { display: flex; gap: 30px; margin-top: 10px; }
-      .radio-group label { margin-top: 0; font-weight: 500; display: flex; align-items: center; cursor: pointer;}
-      .radio-group input[type="radio"] { margin-right: 8px; transform: scale(1.2); }
-      button.btn-principal { 
-        padding: 16px; font-size: 18px; background-color: var(--primary-color); color: white; 
-        border: none; border-radius: 30px; width: 100%; cursor: pointer; margin-top: 30px; font-weight: bold; text-transform: uppercase;
-      }
-      button.btn-principal:disabled { background-color: #9e9e9e; cursor: not-allowed;}
-      #mensagem { text-align: center; font-weight: bold; margin-top: 20px; color: #2e7d32; font-size: 16px;}
+      .btn-camera { padding: 15px; background: #0E6D64; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; font-size: 18px; margin-bottom: 15px;}
+      .btn-trocar { padding: 10px; background: #607d8b; color: white; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-weight: bold; margin-bottom: 15px;}
+      
+      .badge-tipo { text-align: center; font-weight: bold; padding: 8px; border-radius: 5px; color: white; margin-bottom: 15px; font-size: 18px; text-transform: uppercase;}
+      .badge-fracionado { background-color: #0E6D64; }
+      .badge-bobina { background-color: #1976d2; }
+
+      label { font-weight: 500; font-size: 14px; display: block; margin: 12px 0 5px; color: var(--text); }
+      input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+      .row { display: flex; gap: 10px; } .col { flex: 1; }
+      
+      .box-verde { background: #e8f5e9; border: 1px solid #a5d6a7; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 15px; }
+      .txt-sucesso { color: #2e7d32; font-weight: bold; font-size: 18px; margin: 0; }
+      
+      .caixa-troca { background: #fff8e1; border: 1px solid #ffe082; padding: 15px; border-radius: 8px; margin-top: 15px; }
+      .radio-group { display: flex; gap: 20px; }
+      .btn-enviar { padding: 15px; font-size: 18px; background: var(--primary); color: white; border: none; border-radius: 30px; width: 100%; cursor: pointer; margin-top: 25px; font-weight: bold; }
+      .btn-enviar:disabled { background: #999; }
+      #mensagem { text-align: center; font-weight: bold; margin-top: 15px; }
+      
+      .secao { display: none; } /* Tudo escondido por padrão */
+      .secao.active { display: block; }
     </style>
   </head>
   <body>
     <div class="card">
-      <h2>Saída - Bobinas Fechadas</h2>
       
-      <button id="btn-iniciar-camera" onclick="iniciarCamera()">📷 Ler QR Code</button>
-      <div id="reader" style="display: none;"></div>
-      
-      <div class="produto-container">
-        <div class="produto-label">Material Identificado</div>
-        <div class="produto-destaque" id="nomeProduto">Aguardando leitura...</div>
-      </div>
-      
-      <label>Código do Produto:</label>
-      <!-- O onchange faz buscar o nome se você digitar manualmente -->
-      <input type="text" id="codigo" placeholder="Ex: ECO01039 (Digite ou Escaneie)" onchange="buscarNomeDoProduto(this.value)">
-      
-      <div class="row">
-        <div class="col">
-          <label>Tamanho:</label>
-          <input type="text" id="tamanho" placeholder="Ex: 12x22">
-        </div>
-        <div class="col">
-          <label>Quantidade:</label>
-          <input type="number" id="quantidade" value="1" min="1">
-        </div>
+      <!-- TELA INICIAL: APENAS CÂMERA -->
+      <div id="tela-inicial" class="secao active">
+        <h3 style="color:#0E6D64; margin-bottom:20px;">Lona Fort Expedição</h3>
+        <button class="btn-camera" id="btn-camera" onclick="iniciarCamera()">📷 Ler Etiqueta (Escanear)</button>
+        <div id="reader" style="display: none;"></div>
       </div>
 
-      <label>Modalidade:</label>
-      <select id="modalidade">
-        <option value="" disabled selected>Selecione...</option>
-        <option value="LONAFORT">LONAFORT</option>
-        <option value="GEOMEMBRANA">GEOMEMBRANA</option>
-        <option value="GEOEXC">GEOEXC</option>
-        <option value="SHOPEE">SHOPEE</option>
-        <option value="MERCADO LIVRE">MERCADO LIVRE</option>
-        <option value="FRACIONADO">FRACIONADO</option>
-        <option value="OUTRO">OUTRO</option>
-      </select>
-      
-      <div class="row">
-        <div class="col">
-          <label>Pedido (Opcional):</label>
-          <input type="text" id="pedido" placeholder="Número">
-        </div>
-        <div class="col">
-          <label>NF (Opcional):</label>
-          <input type="text" id="nf" placeholder="Nota Fiscal">
-        </div>
-      </div>
-      
-      <label>O.C. (Opcional):</label>
-      <input type="text" id="oc" placeholder="Ordem de Compra">
-      
-      <div class="caixa-troca">
-        <label style="margin-top: 0; color: #f57f17; font-size: 16px;">Houve Substituição?</label>
-        <div class="radio-group">
-          <label><input type="radio" name="isTroca" value="sim" onchange="mostrarCamposTroca(true)"> Sim</label>
-          <label><input type="radio" name="isTroca" value="nao" onchange="mostrarCamposTroca(false)" checked> Não</label>
+      <!-- FORMULÁRIO FRACIONADOS -->
+      <div id="form-fracionado" class="secao">
+        <div class="badge-tipo badge-fracionado">Estoque Fracionado</div>
+        <button class="btn-trocar" onclick="voltarParaCamera()">🔄 Ler Outro Produto</button>
+        
+        <label>Produto Bipado:</label>
+        <input type="text" id="f_produto">
+        
+        <div class="row">
+          <div class="col"><label>Qtd:</label><input type="number" id="f_qtd" value="1"></div>
+          <div class="col">
+            <label>Modalidade:</label>
+            <select id="f_modalidade">
+              <option value="" disabled selected>Selecione...</option>
+              <option value="SHOPEE">SHOPEE</option>
+              <option value="MERCADO LIVRE">MERCADO LIVRE</option>
+              <option value="BALCÃO">BALCÃO</option>
+            </select>
+          </div>
         </div>
         
-        <div id="camposExtrasTroca" style="display: none; margin-top: 20px;">
-          <label>Código Original (Substituído):</label>
-          <input type="text" id="codigoTroca" placeholder="Ex: ECO01024">
-          
-          <label>Tipo de Metragem:</label>
-          <select id="tipoMetragem">
-            <option value="M²">M²</option>
-            <option value="LINEAR">LINEAR</option>
-          </select>
+        <div class="row">
+          <div class="col"><label>L.Ped:</label><input type="text" id="f_lped"></div>
+          <div class="col"><label>Ped:</label><input type="text" id="f_ped"></div>
         </div>
+        <label>NF (Opcional):</label><input type="text" id="f_nf">
+        <label>Responsável:</label><input type="text" id="f_resp" placeholder="Ex: Marcos">
+        
+        <div class="caixa-troca">
+          <label style="color:#f57f17; margin-top:0;">Houve Troca?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="f_isTroca" value="sim" onchange="document.getElementById('f_divTroca').style.display='block'"> Sim</label>
+            <label><input type="radio" name="f_isTroca" value="nao" onchange="document.getElementById('f_divTroca').style.display='none'" checked> Não</label>
+          </div>
+          <div id="f_divTroca" style="display:none; margin-top:10px;">
+            <label>Pedido Inicial:</label><input type="text" id="f_pedInicial">
+            <label>Tipo Metragem:</label>
+            <select id="f_tipoMet"><option value="LINEAR">LINEAR</option><option value="M²">M²</option></select>
+          </div>
+        </div>
+        <label>Obs:</label><textarea id="f_obs"></textarea>
       </div>
 
-      <label>Observação (Opcional):</label>
-      <textarea id="observacao" placeholder="Adicione detalhes..."></textarea>
+      <!-- FORMULÁRIO BOBINAS -->
+      <div id="form-bobina" class="secao">
+        <div class="badge-tipo badge-bobina">Bobina Fechada</div>
+        <button class="btn-trocar" onclick="voltarParaCamera()">🔄 Ler Outro Produto</button>
 
-      <button class="btn-principal" id="btnConfirmar" onclick="confirmar()">Confirmar Baixa</button>
+        <div class="box-verde" id="b_boxVerde" style="display:none;">
+          <p class="txt-sucesso" id="b_nomeProduto">Nome do Produto</p>
+        </div>
+        
+        <label>Código Bobina:</label>
+        <input type="text" id="b_codigo" onchange="buscarNomeBobina(this.value)">
+        
+        <div class="row">
+          <div class="col"><label>Tamanho:</label><input type="text" id="b_tamanho" placeholder="Ex: 12x22"></div>
+          <div class="col"><label>Qtd:</label><input type="number" id="b_qtd" value="1"></div>
+        </div>
+        
+        <label>Modalidade:</label>
+        <select id="b_modalidade">
+          <option value="" disabled selected>Selecione...</option>
+          <option value="LONAFORT">LONAFORT</option>
+          <option value="GEOMEMBRANA">GEOMEMBRANA</option>
+          <option value="SHOPEE">SHOPEE</option>
+          <option value="FRACIONADO">FRACIONADO</option>
+        </select>
+        
+        <div class="row">
+          <div class="col"><label>Pedido:</label><input type="text" id="b_ped"></div>
+          <div class="col"><label>NF:</label><input type="text" id="b_nf"></div>
+        </div>
+        <label>O.C.:</label><input type="text" id="b_oc">
+        
+        <div class="caixa-troca">
+          <label style="color:#f57f17; margin-top:0;">Houve Substituição?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="b_isTroca" value="sim" onchange="document.getElementById('b_divTroca').style.display='block'"> Sim</label>
+            <label><input type="radio" name="b_isTroca" value="nao" onchange="document.getElementById('b_divTroca').style.display='none'" checked> Não</label>
+          </div>
+          <div id="b_divTroca" style="display:none; margin-top:10px;">
+            <label>Código Substituto:</label><input type="text" id="b_codTroca">
+            <label>Tipo Metragem:</label>
+            <select id="b_tipoMet"><option value="M²">M²</option><option value="LINEAR">LINEAR</option></select>
+          </div>
+        </div>
+        <label>Obs:</label><textarea id="b_obs"></textarea>
+      </div>
+
+      <!-- BOTÃO DE ENVIO GERAL (Fica escondido até o form abrir) -->
+      <button class="btn-enviar" id="btn-enviar" style="display:none;" onclick="enviarDados()">🚀 Confirmar Baixa</button>
       <p id="mensagem"></p>
     </div>
 
     <script>
       // ==========================================================
-      const API_URL = "https://script.google.com/macros/s/AKfycby-Kjv_T7roddyoNEfFdXdCOcx2v23_487sx7ohKrlEjTrc3EkmXejEGNtUPQqlc1rcCA/exec";
+      const API_URL = "https://script.google.com/macros/s/SEU_LINK_AQUI/exec";
       // ==========================================================
 
+      let modoAtual = '';
       let html5QrCode;
 
-      function tocarSom(tipo) {
-        try {
-          var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          var oscillator = audioCtx.createOscillator();
-          var gainNode = audioCtx.createGain();
-          oscillator.connect(gainNode);
-          gainNode.connect(audioCtx.destination);
-          if (tipo === 'bip') {
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(1200, audioCtx.currentTime); 
-            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.1);
-          }
-        } catch (e) { }
+      function bip() { if(navigator.vibrate) navigator.vibrate(100); }
+
+      function voltarParaCamera() {
+        document.getElementById('form-fracionado').classList.remove('active');
+        document.getElementById('form-bobina').classList.remove('active');
+        document.getElementById('btn-enviar').style.display = 'none';
+        document.getElementById('mensagem').innerText = '';
+        
+        document.getElementById('tela-inicial').classList.add('active');
       }
 
       function iniciarCamera() {
-        var btnCamera = document.getElementById('btn-iniciar-camera');
-        btnCamera.innerText = "Solicitando permissão...";
-        Html5Qrcode.getCameras().then(devices => {
-          if (devices && devices.length) {
-            btnCamera.style.display = 'none';
-            document.getElementById('reader').style.display = 'block';
-            html5QrCode = new Html5Qrcode("reader");
-            html5QrCode.start({ facingMode: "environment" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure)
-            .catch(() => {
-               html5QrCode.start(devices[devices.length - 1].id, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
-            });
-          } else { alert("Câmera não encontrada."); btnCamera.innerText = "📷 Ler QR Code"; }
-        }).catch(err => { alert("Permissão negada!"); btnCamera.innerText = "📷 Ler QR Code"; });
+        document.getElementById('btn-camera').style.display = 'none';
+        document.getElementById('reader').style.display = 'block';
+        html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start({ facingMode: "environment" }, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, (err)=>{})
+        .catch(err => { alert("Erro de câmera"); document.getElementById('btn-camera').style.display = 'block'; });
       }
 
-      // FUNÇÃO MÁGICA: Puxa o nome da Base de Dados
-      function buscarNomeDoProduto(codigoLido) {
-        if(!codigoLido) return;
+      function onScanSuccess(texto) {
+        bip();
+        html5QrCode.stop();
+        document.getElementById('reader').style.display = 'none';
+        document.getElementById('btn-camera').style.display = 'block';
         
-        var nomeElem = document.getElementById('nomeProduto');
-        nomeElem.innerText = "Buscando nome na planilha...";
-        nomeElem.className = "produto-destaque";
+        document.getElementById('tela-inicial').classList.remove('active');
+        document.getElementById('btn-enviar').style.display = 'block';
+
+        let lidoMaiusculo = texto.trim().toUpperCase();
         
-        // Pede o nome para o Google Script
-        fetch(API_URL + "?codigo=" + encodeURIComponent(codigoLido))
-          .then(response => response.text())
-          .then(nome => {
-            nomeElem.innerText = nome;
-            if (nome !== "Produto não encontrado" && nome !== "Erro ao buscar") {
-              nomeElem.className = "produto-sucesso"; // Fica Verde!
+        // LÓGICA: Se começar com ECO ou LON, é bobina. O restante cai no fracionado.
+        if (lidoMaiusculo.startsWith("ECO") || lidoMaiusculo.startsWith("LON")) {
+          modoAtual = 'bobina';
+          document.getElementById('form-bobina').classList.add('active');
+          document.getElementById('btn-enviar').style.backgroundColor = '#1976d2';
+          
+          document.getElementById('b_codigo').value = texto;
+          buscarNomeBobina(texto);
+        } else {
+          modoAtual = 'fracionado';
+          document.getElementById('form-fracionado').classList.add('active');
+          document.getElementById('btn-enviar').style.backgroundColor = '#0E6D64';
+          
+          document.getElementById('f_produto').value = texto;
+        }
+      }
+
+      function buscarNomeBobina(codigo) {
+        if(!codigo) return;
+        let box = document.getElementById('b_boxVerde');
+        let txt = document.getElementById('b_nomeProduto');
+        box.style.display = 'block'; box.style.borderColor = '#ccc'; box.style.backgroundColor = '#eee';
+        txt.innerText = 'Buscando material...'; txt.style.color = '#555';
+        
+        fetch(API_URL + "?codigo=" + encodeURIComponent(codigo))
+          .then(res => res.json()) // AGORA ELE LÊ EM FORMATO JSON!
+          .then(data => {
+            let nome = data.nome;
+            txt.innerText = nome;
+            if(nome !== "Produto não encontrado" && nome !== "Erro ao buscar") { 
+              box.style.borderColor = '#a5d6a7'; box.style.backgroundColor = '#e8f5e9'; txt.style.color = '#2e7d32'; 
             }
-          })
-          .catch(err => {
-            nomeElem.innerText = "Sem conexão para buscar nome";
+            else { 
+              box.style.borderColor = '#ef9a9a'; box.style.backgroundColor = '#ffebee'; txt.style.color = '#c62828'; 
+            }
+          }).catch(err => {
+            txt.innerText = "Erro na busca. Verifique conexão.";
+            box.style.borderColor = '#ef9a9a'; box.style.backgroundColor = '#ffebee'; txt.style.color = '#c62828';
           });
       }
 
-      function onScanSuccess(decodedText) {
-        tocarSom('bip');
-        document.getElementById('codigo').value = decodedText; 
-        
-        // Assim que bipa, já manda buscar o nome pra ficar verde
-        buscarNomeDoProduto(decodedText);
-        
-        if (navigator.vibrate) { navigator.vibrate([100]); }
-        
-        html5QrCode.stop().then(() => {
-          document.getElementById('reader').style.display = 'none';
-          var btnCamera = document.getElementById('btn-iniciar-camera');
-          btnCamera.style.display = 'block'; btnCamera.innerText = "📷 Ler Outro Produto";
-        });
-      }
+      function enviarDados() {
+        let btn = document.getElementById('btn-enviar');
+        let msg = document.getElementById('mensagem');
+        let payload = { tipo: modoAtual };
 
-      function onScanFailure(error) { }
-
-      function mostrarCamposTroca(mostrar) {
-        document.getElementById('camposExtrasTroca').style.display = mostrar ? 'block' : 'none';
-      }
-
-      function confirmar() {
-        var btn = document.getElementById('btnConfirmar');
-        var msg = document.getElementById('mensagem');
-        var isTrocaSelecionado = document.querySelector('input[name="isTroca"]:checked').value;
-
-        var dados = {
-          codigo: document.getElementById('codigo').value.trim(),
-          tamanho: document.getElementById('tamanho').value.trim(),
-          quantidade: document.getElementById('quantidade').value || 1,
-          modalidade: document.getElementById('modalidade').value || "",
-          pedido: document.getElementById('pedido').value.trim(),
-          nf: document.getElementById('nf').value.trim(),
-          oc: document.getElementById('oc').value.trim(),
-          isTroca: isTrocaSelecionado,
-          codigoTroca: isTrocaSelecionado === "sim" ? document.getElementById('codigoTroca').value.trim() : "",
-          tipoMetragem: isTrocaSelecionado === "sim" ? document.getElementById('tipoMetragem').value : "",
-          observacao: document.getElementById('observacao').value.trim()
-        };
-        
-        if(!dados.codigo || !dados.tamanho || !dados.modalidade) {
-          alert("Por favor, preencha o Código, Tamanho e a Modalidade."); return;
+        if (modoAtual === 'fracionado') {
+          payload.produto = document.getElementById('f_produto').value.trim();
+          payload.quantidade = document.getElementById('f_qtd').value;
+          payload.modalidade = document.getElementById('f_modalidade').value;
+          payload.lped = document.getElementById('f_lped').value;
+          payload.ped = document.getElementById('f_ped').value;
+          payload.nf = document.getElementById('f_nf').value;
+          payload.responsavel = document.getElementById('f_resp').value;
+          payload.isTroca = document.querySelector('input[name="f_isTroca"]:checked').value;
+          payload.pedidoInicial = document.getElementById('f_pedInicial').value;
+          payload.tipoMetragem = document.getElementById('f_tipoMet').value;
+          payload.observacao = document.getElementById('f_obs').value;
+          if(!payload.produto || !payload.modalidade) { alert("Preencha Produto e Modalidade!"); return; }
+        } else {
+          payload.codigo = document.getElementById('b_codigo').value.trim();
+          payload.tamanho = document.getElementById('b_tamanho').value.trim();
+          payload.quantidade = document.getElementById('b_qtd').value;
+          payload.modalidade = document.getElementById('b_modalidade').value;
+          payload.ped = document.getElementById('b_ped').value;
+          payload.nf = document.getElementById('b_nf').value;
+          payload.oc = document.getElementById('b_oc').value;
+          payload.isTroca = document.querySelector('input[name="b_isTroca"]:checked').value;
+          payload.codigoTroca = document.getElementById('b_codTroca').value;
+          payload.tipoMetragem = document.getElementById('b_tipoMet').value;
+          payload.observacao = document.getElementById('b_obs').value;
+          if(!payload.codigo || !payload.tamanho || !payload.modalidade) { alert("Preencha Código, Tamanho e Modalidade!"); return; }
         }
 
         btn.disabled = true; btn.innerText = "Enviando..."; msg.innerText = "";
         
-        fetch(API_URL, {
-          method: 'POST',
-          body: JSON.stringify(dados)
-        })
-        .then(response => response.json())
-        .then(respostaJSON => {
-          if (respostaJSON.sucesso) {
-            tocarSom('bip');
-            if (navigator.vibrate) { navigator.vibrate([100, 50, 100]); }
-            msg.innerText = respostaJSON.mensagem; 
-            btn.innerText = "BAIXA FINALIZADA!"; 
-            btn.style.backgroundColor = "#2e7d32";
-            
-            setTimeout(function() {
-              // Reseta tudo
-              document.getElementById('nomeProduto').innerText = "Aguardando leitura...";
-              document.getElementById('nomeProduto').className = "produto-destaque";
-              
-              document.getElementById('codigo').value = "";
-              document.getElementById('tamanho').value = "";
-              document.getElementById('quantidade').value = 1;
-              document.getElementById('pedido').value = "";
-              document.getElementById('nf').value = "";
-              document.getElementById('oc').value = "";
-              document.getElementById('observacao').value = "";
-              document.getElementById('modalidade').selectedIndex = 0; 
-              
-              btn.disabled = false; btn.innerText = "Confirmar Baixa"; btn.style.backgroundColor = "var(--primary-color)"; msg.innerText = "";
-              document.querySelector('input[name="isTroca"][value="nao"]').checked = true;
-              mostrarCamposTroca(false); 
-              document.getElementById('codigoTroca').value = "";
-            }, 3000); 
+        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+        .then(res => res.json())
+        .then(res => {
+          if(res.sucesso) {
+            bip(); msg.innerText = "BAIXA REGISTRADA!"; msg.style.color = "green";
+            setTimeout(() => { location.reload(); }, 2000);
           } else {
-             msg.innerText = "Erro: " + respostaJSON.erro; msg.style.color = "#d32f2f";
-             btn.disabled = false; btn.innerText = "Tentar Novamente";
+            msg.innerText = "Erro: " + res.erro; msg.style.color = "red"; btn.disabled = false; btn.innerText = "Tentar Novamente";
           }
-        })
-        .catch(erro => {
-          console.error("Erro no fetch:", erro);
-          msg.innerText = "Erro de conexão ao salvar. Tente de novo."; msg.style.color = "#d32f2f";
-          btn.disabled = false; btn.innerText = "Tentar Novamente";
-        });
+        }).catch(err => { msg.innerText = "Erro de conexão."; btn.disabled = false; btn.innerText = "Tentar Novamente"; });
       }
     </script>
   </body>
