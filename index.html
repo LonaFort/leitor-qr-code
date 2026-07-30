@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
       :root {
-        --primary-color: #d32f2f;
+        --primary-color: #1976d2; 
         --secondary-color: #f5f5f5;
         --text-color: #333;
         --border-radius: 12px;
@@ -19,20 +19,23 @@
       }
       .card {
         background-color: white; padding: 25px; border-radius: var(--border-radius);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15); width: 100%; max-width: 400px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15); width: 100%; max-width: 450px;
         box-sizing: border-box;
       }
       h2 { color: var(--text-color); text-align: center; margin-top: 0; margin-bottom: 20px; font-weight: 600;}
       #reader { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 20px; border: 2px solid #ddd; }
       #btn-iniciar-camera {
-        padding: 12px; background-color: #1976d2; color: white; border: none;
+        padding: 12px; background-color: #0E6D64; color: white; border: none;
         border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 15px; font-weight: bold; font-size: 16px;
       }
+      
+      /* Caixinha do nome do produto */
       .produto-container { background-color: var(--secondary-color); padding: 15px; border-radius: var(--border-radius); text-align: center; margin-bottom: 20px; border: 1px solid #ddd; }
       .produto-label { font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-      .produto-destaque { color: var(--primary-color); font-size: 20px; font-weight: bold; margin: 0; }
-      .produto-sucesso { color: #2e7d32; font-size: 26px; font-weight: bold; margin: 0; }
-      label { font-weight: 500; font-size: 14px; color: var(--text-color); display: block; margin-top: 15px; margin-bottom: 8px; }
+      .produto-destaque { color: var(--primary-color); font-size: 18px; font-weight: bold; margin: 0; transition: 0.3s; }
+      .produto-sucesso { color: #2e7d32; font-size: 20px; font-weight: bold; margin: 0; transition: 0.3s; }
+      
+      label { font-weight: 500; font-size: 14px; color: var(--text-color); display: block; margin-top: 15px; margin-bottom: 5px; }
       input[type="text"], input[type="number"], select, textarea {
         width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px;
         box-sizing: border-box; font-size: 16px; background-color: #fafafa;
@@ -54,71 +57,72 @@
   </head>
   <body>
     <div class="card">
-      <h2>Registrar Saída</h2>
+      <h2>Saída - Bobinas Fechadas</h2>
       
-      <button id="btn-iniciar-camera" onclick="iniciarCamera()">Ligar Câmera</button>
+      <button id="btn-iniciar-camera" onclick="iniciarCamera()">📷 Ler QR Code</button>
       <div id="reader" style="display: none;"></div>
       
       <div class="produto-container">
-        <div class="produto-label">Produto Detectado</div>
-        <div class="produto-destaque" id="textoTamanho">Nenhum produto lido</div>
+        <div class="produto-label">Material Identificado</div>
+        <div class="produto-destaque" id="nomeProduto">Aguardando leitura...</div>
       </div>
       
-      <label>Quantidade:</label>
-      <input type="number" id="quantidade" value="1" min="1">
+      <label>Código do Produto:</label>
+      <!-- O onchange faz buscar o nome se você digitar manualmente -->
+      <input type="text" id="codigo" placeholder="Ex: ECO01039 (Digite ou Escaneie)" onchange="buscarNomeDoProduto(this.value)">
       
       <div class="row">
         <div class="col">
-          <label>L.Ped. (Opcional):</label>
-          <input type="text" id="lped" placeholder="Ex: 1">
+          <label>Tamanho:</label>
+          <input type="text" id="tamanho" placeholder="Ex: 12x22">
         </div>
         <div class="col">
-          <label>Ped. (Opcional):</label>
-          <input type="text" id="ped" placeholder="Ex: 12345">
+          <label>Quantidade:</label>
+          <input type="number" id="quantidade" value="1" min="1">
         </div>
       </div>
 
       <label>Modalidade:</label>
       <select id="modalidade">
         <option value="" disabled selected>Selecione...</option>
-        <option value="MERCADO LIVRE">MERCADO LIVRE</option>
-        <option value="FLEX">FLEX</option>
-        <option value="SOLOPROTEC">SOLOPROTEC</option>
-        <option value="APD2">APD2</option>
         <option value="LONAFORT">LONAFORT</option>
         <option value="GEOMEMBRANA">GEOMEMBRANA</option>
-        <option value="SHOPEE">SHOPEE</option>
-        <option value="CORREIOS">CORREIOS</option>
-        <option value="FULL">FULL</option>
-        <option value="MAGALU">MAGALU</option>
-        <option value="RETIRA">RETIRA</option>
-        <option value="AJUSTE">AJUSTE</option>
-        <option value="REFUGO">REFUGO</option>
-        <option value="OUTRO">OUTRO</option>
         <option value="GEOEXC">GEOEXC</option>
+        <option value="SHOPEE">SHOPEE</option>
+        <option value="MERCADO LIVRE">MERCADO LIVRE</option>
+        <option value="FRACIONADO">FRACIONADO</option>
+        <option value="OUTRO">OUTRO</option>
       </select>
       
-      <label>NF (Opcional):</label>
-      <input type="text" id="nf" placeholder="Número da Nota">
-
-      <label>Responsável:</label>
-      <input type="text" id="responsavel" placeholder="Nome da pessoa">
+      <div class="row">
+        <div class="col">
+          <label>Pedido (Opcional):</label>
+          <input type="text" id="pedido" placeholder="Número">
+        </div>
+        <div class="col">
+          <label>NF (Opcional):</label>
+          <input type="text" id="nf" placeholder="Nota Fiscal">
+        </div>
+      </div>
+      
+      <label>O.C. (Opcional):</label>
+      <input type="text" id="oc" placeholder="Ordem de Compra">
       
       <div class="caixa-troca">
-        <label style="margin-top: 0; color: #f57f17; font-size: 16px;">Troca de material?</label>
+        <label style="margin-top: 0; color: #f57f17; font-size: 16px;">Houve Substituição?</label>
         <div class="radio-group">
           <label><input type="radio" name="isTroca" value="sim" onchange="mostrarCamposTroca(true)"> Sim</label>
           <label><input type="radio" name="isTroca" value="nao" onchange="mostrarCamposTroca(false)" checked> Não</label>
         </div>
         
         <div id="camposExtrasTroca" style="display: none; margin-top: 20px;">
-          <label>Pedido Inicial:</label>
-          <input type="text" id="pedidoInicial" placeholder="Ex: PB 10X50">
+          <label>Código Original (Substituído):</label>
+          <input type="text" id="codigoTroca" placeholder="Ex: ECO01024">
           
           <label>Tipo de Metragem:</label>
           <select id="tipoMetragem">
-            <option value="m²">m²</option>
-            <option value="m. linear">m. linear</option>
+            <option value="M²">M²</option>
+            <option value="LINEAR">LINEAR</option>
           </select>
         </div>
       </div>
@@ -126,15 +130,15 @@
       <label>Observação (Opcional):</label>
       <textarea id="observacao" placeholder="Adicione detalhes..."></textarea>
 
-      <button class="btn-principal" id="btnConfirmar" onclick="confirmar()" disabled>Aguardando Leitura</button>
+      <button class="btn-principal" id="btnConfirmar" onclick="confirmar()">Confirmar Baixa</button>
       <p id="mensagem"></p>
     </div>
 
     <script>
       // ==========================================================
-      // COLE AQUI O URL DO SEU GOOGLE APPS SCRIPT!
+      const API_URL = "https://script.google.com/macros/s/AKfycby-Kjv_T7roddyoNEfFdXdCOcx2v23_487sx7ohKrlEjTrc3EkmXejEGNtUPQqlc1rcCA/exec";
       // ==========================================================
-      const API_URL = "https://script.google.com/a/macros/lonafort.com.br/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
+
       let html5QrCode;
 
       function tocarSom(tipo) {
@@ -151,14 +155,6 @@
             gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
             oscillator.start(audioCtx.currentTime);
             oscillator.stop(audioCtx.currentTime + 0.1);
-          } else if (tipo === 'sucesso') {
-            oscillator.type = 'triangle';
-            oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
-            oscillator.frequency.setValueAtTime(900, audioCtx.currentTime + 0.15);
-            gainNode.gain.setValueAtTime(1, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-            oscillator.start(audioCtx.currentTime);
-            oscillator.stop(audioCtx.currentTime + 0.4);
           }
         } catch (e) { }
       }
@@ -175,25 +171,45 @@
             .catch(() => {
                html5QrCode.start(devices[devices.length - 1].id, { fps: 15, qrbox: { width: 250, height: 250 } }, onScanSuccess, onScanFailure);
             });
-          } else { alert("Câmera não encontrada."); btnCamera.innerText = "Ligar Câmera"; }
-        }).catch(err => { alert("Permissão negada!"); btnCamera.innerText = "Ligar Câmera"; });
+          } else { alert("Câmera não encontrada."); btnCamera.innerText = "📷 Ler QR Code"; }
+        }).catch(err => { alert("Permissão negada!"); btnCamera.innerText = "📷 Ler QR Code"; });
+      }
+
+      // FUNÇÃO MÁGICA: Puxa o nome da Base de Dados
+      function buscarNomeDoProduto(codigoLido) {
+        if(!codigoLido) return;
+        
+        var nomeElem = document.getElementById('nomeProduto');
+        nomeElem.innerText = "Buscando nome na planilha...";
+        nomeElem.className = "produto-destaque";
+        
+        // Pede o nome para o Google Script
+        fetch(API_URL + "?codigo=" + encodeURIComponent(codigoLido))
+          .then(response => response.text())
+          .then(nome => {
+            nomeElem.innerText = nome;
+            if (nome !== "Produto não encontrado" && nome !== "Erro ao buscar") {
+              nomeElem.className = "produto-sucesso"; // Fica Verde!
+            }
+          })
+          .catch(err => {
+            nomeElem.innerText = "Sem conexão para buscar nome";
+          });
       }
 
       function onScanSuccess(decodedText) {
         tocarSom('bip');
-        var textoElem = document.getElementById('textoTamanho');
-        textoElem.innerText = decodedText;
-        textoElem.classList.remove("produto-destaque");
-        textoElem.classList.add("produto-sucesso");
+        document.getElementById('codigo').value = decodedText; 
         
-        var btn = document.getElementById('btnConfirmar');
-        btn.disabled = false; btn.innerText = "Confirmar Baixa";
+        // Assim que bipa, já manda buscar o nome pra ficar verde
+        buscarNomeDoProduto(decodedText);
+        
         if (navigator.vibrate) { navigator.vibrate([100]); }
         
         html5QrCode.stop().then(() => {
           document.getElementById('reader').style.display = 'none';
           var btnCamera = document.getElementById('btn-iniciar-camera');
-          btnCamera.style.display = 'block'; btnCamera.innerText = "Ler Outro Produto";
+          btnCamera.style.display = 'block'; btnCamera.innerText = "📷 Ler Outro Produto";
         });
       }
 
@@ -206,33 +222,28 @@
       function confirmar() {
         var btn = document.getElementById('btnConfirmar');
         var msg = document.getElementById('mensagem');
-        var produtoLido = document.getElementById('textoTamanho').innerText;
-        
-        if (produtoLido === "Nenhum produto lido") { alert("Leia um código QR primeiro."); return; }
-
         var isTrocaSelecionado = document.querySelector('input[name="isTroca"]:checked').value;
 
         var dados = {
-          tamanho: produtoLido,
-          quantidade: document.getElementById('quantidade').value || "",
-          lped: document.getElementById('lped').value || "",
-          ped: document.getElementById('ped').value || "",
+          codigo: document.getElementById('codigo').value.trim(),
+          tamanho: document.getElementById('tamanho').value.trim(),
+          quantidade: document.getElementById('quantidade').value || 1,
           modalidade: document.getElementById('modalidade').value || "",
-          nf: document.getElementById('nf').value || "",
+          pedido: document.getElementById('pedido').value.trim(),
+          nf: document.getElementById('nf').value.trim(),
+          oc: document.getElementById('oc').value.trim(),
           isTroca: isTrocaSelecionado,
-          pedidoInicial: isTrocaSelecionado === "sim" ? (document.getElementById('pedidoInicial').value || "") : "",
-          tipoMetragem: isTrocaSelecionado === "sim" ? (document.getElementById('tipoMetragem').value || "") : "",
-          responsavel: document.getElementById('responsavel').value || "",
-          observacao: document.getElementById('observacao').value || ""
+          codigoTroca: isTrocaSelecionado === "sim" ? document.getElementById('codigoTroca').value.trim() : "",
+          tipoMetragem: isTrocaSelecionado === "sim" ? document.getElementById('tipoMetragem').value : "",
+          observacao: document.getElementById('observacao').value.trim()
         };
         
-        if(!dados.quantidade || !dados.modalidade || !dados.responsavel) {
-          alert("Quantidade, modalidade e responsável são obrigatórios."); return;
+        if(!dados.codigo || !dados.tamanho || !dados.modalidade) {
+          alert("Por favor, preencha o Código, Tamanho e a Modalidade."); return;
         }
 
-        btn.disabled = true; btn.innerText = "Salvando..."; msg.innerText = "";
+        btn.disabled = true; btn.innerText = "Enviando..."; msg.innerText = "";
         
-        // A MÁGICA ACONTECE AQUI: O novo comando FETCH envia para o Google Apps Script
         fetch(API_URL, {
           method: 'POST',
           body: JSON.stringify(dados)
@@ -240,36 +251,39 @@
         .then(response => response.json())
         .then(respostaJSON => {
           if (respostaJSON.sucesso) {
-            tocarSom('sucesso');
+            tocarSom('bip');
             if (navigator.vibrate) { navigator.vibrate([100, 50, 100]); }
             msg.innerText = respostaJSON.mensagem; 
             btn.innerText = "BAIXA FINALIZADA!"; 
             btn.style.backgroundColor = "#2e7d32";
             
             setTimeout(function() {
-              document.getElementById('textoTamanho').innerText = "Nenhum produto lido";
-              document.getElementById('textoTamanho').className = "produto-destaque";
+              // Reseta tudo
+              document.getElementById('nomeProduto').innerText = "Aguardando leitura...";
+              document.getElementById('nomeProduto').className = "produto-destaque";
+              
+              document.getElementById('codigo').value = "";
+              document.getElementById('tamanho').value = "";
               document.getElementById('quantidade').value = 1;
-              document.getElementById('lped').value = "";
-              document.getElementById('ped').value = "";
+              document.getElementById('pedido').value = "";
               document.getElementById('nf').value = "";
-              document.getElementById('responsavel').value = "";
+              document.getElementById('oc').value = "";
               document.getElementById('observacao').value = "";
               document.getElementById('modalidade').selectedIndex = 0; 
               
-              btn.disabled = true; btn.innerText = "Aguardando Leitura"; btn.style.backgroundColor = "var(--primary-color)"; msg.innerText = "";
+              btn.disabled = false; btn.innerText = "Confirmar Baixa"; btn.style.backgroundColor = "var(--primary-color)"; msg.innerText = "";
               document.querySelector('input[name="isTroca"][value="nao"]').checked = true;
               mostrarCamposTroca(false); 
-              document.getElementById('pedidoInicial').value = "";
-            }, 3500); 
+              document.getElementById('codigoTroca').value = "";
+            }, 3000); 
           } else {
-             msg.innerText = "Erro: " + respostaJSON.erro; msg.style.color = "var(--primary-color)";
+             msg.innerText = "Erro: " + respostaJSON.erro; msg.style.color = "#d32f2f";
              btn.disabled = false; btn.innerText = "Tentar Novamente";
           }
         })
         .catch(erro => {
           console.error("Erro no fetch:", erro);
-          msg.innerText = "Erro de conexão ao salvar. Tente de novo."; msg.style.color = "var(--primary-color)";
+          msg.innerText = "Erro de conexão ao salvar. Tente de novo."; msg.style.color = "#d32f2f";
           btn.disabled = false; btn.innerText = "Tentar Novamente";
         });
       }
