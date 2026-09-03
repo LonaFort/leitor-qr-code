@@ -19,7 +19,6 @@
       .badge-fracionado { background-color: #0E6D64; }
       .badge-bobina { background-color: #1976d2; }
 
-      /* Caixinha de Destaque do Material Identificado */
       .box-verde { background: #e8f5e9; border: 2px solid #a5d6a7; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 15px; transition: 0.3s; }
       .txt-sucesso { color: #2e7d32; font-weight: bold; font-size: 20px; margin: 0; word-break: break-word; }
       .txt-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 600; }
@@ -36,7 +35,6 @@
       .btn-enviar:disabled { background: #999; }
       #mensagem { text-align: center; font-weight: bold; margin-top: 15px; font-size: 16px; }
       
-      /* Inicia com tudo escondido */
       .secao { display: none; } 
       .secao.active { display: block; }
     </style>
@@ -44,14 +42,13 @@
   <body>
     <div class="card">
       
-      <!-- TELA INICIAL: APENAS A CÂMERA -->
       <div id="tela-inicial" class="secao active">
         <h3 style="color:#0E6D64; margin-bottom:20px;">Lona Fort Expedição</h3>
         <button class="btn-camera" id="btn-camera" onclick="iniciarCamera()">📷 Ler Etiqueta (Escanear)</button>
         <div id="reader" style="display: none;"></div>
       </div>
 
-      <!-- FORMULÁRIO FRACIONADOS -->
+      <!-- FRACIONADOS -->
       <div id="form-fracionado" class="secao">
         <div class="badge-tipo badge-fracionado">Estoque Fracionado</div>
         <button class="btn-trocar" onclick="voltarParaCamera()">🔄 Ler Outro Produto</button>
@@ -61,7 +58,6 @@
           <p class="txt-sucesso" id="f_nomeDisplay">-</p>
         </div>
         
-        <!-- Campo somente leitura do produto bipado -->
         <input type="hidden" id="f_produto">
         
         <div class="row">
@@ -70,9 +66,23 @@
             <label>Modalidade:</label>
             <select id="f_modalidade">
               <option value="" disabled selected>Selecione...</option>
-              <option value="SHOPEE">SHOPEE</option>
-              <option value="MERCADO LIVRE">MERCADO LIVRE</option>
-              <option value="BALCÃO">BALCÃO</option>
+              <option value="Mercado Livre">Mercado Livre</option>
+              <option value="FLEX">FLEX</option>
+              <option value="SOLOPROTEC">SOLOPROTEC</option>
+              <option value="APD2">APD2</option>
+              <option value="LONAFORT">LONAFORT</option>
+              <option value="GEOMEMBRANA">GEOMEMBRANA</option>
+              <option value="Shopee">Shopee</option>
+              <option value="GEOEXC">GEOEXC</option>
+              <option value="Correios">Correios</option>
+              <option value="Magalu">Magalu</option>
+              <option value="FRACIONADO">FRACIONADO</option>
+              <option value="Retira">Retira</option>
+              <option value="FULL">FULL</option>
+              <option value="REFUGO">REFUGO</option>
+              <option value="Outro">Outro</option>
+              <option value="AJUSTE">AJUSTE</option>
+              <option value="FLEX SOLOPROTEC">FLEX SOLOPROTEC</option>
             </select>
           </div>
         </div>
@@ -99,12 +109,11 @@
         <label>Obs:</label><textarea id="f_obs"></textarea>
       </div>
 
-      <!-- FORMULÁRIO BOBINAS -->
+      <!-- BOBINAS -->
       <div id="form-bobina" class="secao">
         <div class="badge-tipo badge-bobina">Bobina Fechada</div>
         <button class="btn-trocar" onclick="voltarParaCamera()">🔄 Ler Outro Produto</button>
 
-        <!-- CAIXA EM DESTAQUE NO TOPO -->
         <div class="box-verde" id="b_boxVerde">
           <div class="txt-label">Material Identificado</div>
           <p class="txt-sucesso" id="b_nomeProduto">Buscando...</p>
@@ -121,10 +130,23 @@
         <label>Modalidade:</label>
         <select id="b_modalidade">
           <option value="" disabled selected>Selecione...</option>
+          <option value="Mercado Livre">Mercado Livre</option>
+          <option value="FLEX">FLEX</option>
+          <option value="SOLOPROTEC">SOLOPROTEC</option>
+          <option value="APD2">APD2</option>
           <option value="LONAFORT">LONAFORT</option>
           <option value="GEOMEMBRANA">GEOMEMBRANA</option>
-          <option value="SHOPEE">SHOPEE</option>
+          <option value="Shopee">Shopee</option>
+          <option value="GEOEXC">GEOEXC</option>
+          <option value="Correios">Correios</option>
+          <option value="Magalu">Magalu</option>
           <option value="FRACIONADO">FRACIONADO</option>
+          <option value="Retira">Retira</option>
+          <option value="FULL">FULL</option>
+          <option value="REFUGO">REFUGO</option>
+          <option value="Outro">Outro</option>
+          <option value="AJUSTE">AJUSTE</option>
+          <option value="FLEX SOLOPROTEC">FLEX SOLOPROTEC</option>
         </select>
         
         <div class="row">
@@ -148,18 +170,17 @@
         <label>Obs:</label><textarea id="b_obs"></textarea>
       </div>
 
-      <!-- BOTÃO DE ENVIO -->
       <button class="btn-enviar" id="btn-enviar" style="display:none;" onclick="enviarDados()">🚀 Confirmar Baixa</button>
       <p id="mensagem"></p>
     </div>
 
     <script>
+      // NÃO ESQUEÇA DE COLOCAR O SEU LINK AQUI DE VOLTA
       const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
 
       let modoAtual = '';
       let html5QrCode;
 
-      // SOM DO BIP DE LEITURA
       function tocarSomBip() {
         try {
           var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -182,7 +203,6 @@
         document.getElementById('form-bobina').classList.remove('active');
         document.getElementById('btn-enviar').style.display = 'none';
         document.getElementById('mensagem').innerText = '';
-        
         document.getElementById('tela-inicial').classList.add('active');
       }
 
@@ -195,7 +215,7 @@
       }
 
       function onScanSuccess(texto) {
-        tocarSomBip(); // TOCA O BIP IMEDIATAMENTE
+        tocarSomBip(); 
         html5QrCode.stop();
         document.getElementById('reader').style.display = 'none';
         document.getElementById('btn-camera').style.display = 'block';
@@ -205,7 +225,6 @@
 
         let lidoMaiusculo = texto.trim().toUpperCase();
         
-        // REGRA: Começou com ECO ou LON = Bobina
         if (lidoMaiusculo.startsWith("ECO") || lidoMaiusculo.startsWith("LON")) {
           modoAtual = 'bobina';
           document.getElementById('form-bobina').classList.add('active');
@@ -219,7 +238,7 @@
           document.getElementById('btn-enviar').style.backgroundColor = '#0E6D64';
           
           document.getElementById('f_produto').value = texto;
-          document.getElementById('f_nomeDisplay').innerText = texto; // Mostra o produto fracionado em destaque
+          document.getElementById('f_nomeDisplay').innerText = texto; 
         }
       }
 
@@ -235,7 +254,7 @@
           .then(data => {
             let nome = data.nome;
             txt.innerText = nome;
-            if(nome !== "Produto não encontrado" && nome !== "Erro ao buscar material") { 
+            if(nome !== "Produto não encontrado no Estoque." && nome !== "Erro ao buscar material") { 
               box.style.borderColor = '#a5d6a7'; box.style.backgroundColor = '#e8f5e9'; txt.style.color = '#2e7d32'; 
             } else { 
               box.style.borderColor = '#ef9a9a'; box.style.backgroundColor = '#ffebee'; txt.style.color = '#c62828'; 
