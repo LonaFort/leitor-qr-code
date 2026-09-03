@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lona Fort - Expedição</title>
+    <title>Lona Fort - Fracionados</title>
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
       :root { 
@@ -11,106 +11,51 @@
         --primary-dark: #0a4f48;
         --bg: #f0f2f5; 
         --text: #2d3748; 
-        --border-radius: 16px;
       }
       
       body { 
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        background-color: var(--bg); 
-        margin: 0; 
-        padding: 0;
-        display: flex; 
-        justify-content: center; 
-        min-height: 100vh;
+        background-color: var(--bg); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh;
       }
       
-      .app-container { 
-        background: white; 
-        width: 100%; 
-        max-width: 480px; 
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* CABEÇALHO */
-      .header {
-        background-color: var(--primary);
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        z-index: 10;
-      }
-
+      .app-container { background: white; width: 100%; max-width: 480px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+      .header { background-color: var(--primary); color: white; padding: 20px; text-align: center; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
       .content { padding: 24px; flex: 1; }
       
-      /* CÂMERA */
-      #reader { width: 100%; border-radius: 12px; overflow: hidden; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background: #000; }
+      #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; }
       .camera-loading { text-align: center; color: #666; margin-top: 20px; font-weight: 500; }
 
-      /* PRODUTO EM DESTAQUE */
-      .produto-card {
-        background: #e6f4f1;
-        border-left: 5px solid var(--primary);
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 25px;
-      }
+      .produto-card { background: #e6f4f1; border-left: 5px solid var(--primary); padding: 20px; border-radius: 8px; margin-bottom: 25px; }
       .produto-label { font-size: 12px; color: #555; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; margin-bottom: 8px; }
       .produto-nome { font-size: 22px; color: var(--primary-dark); font-weight: 800; margin: 0; word-break: break-word; }
 
-      /* FORMULÁRIO */
       .form-group { margin-bottom: 20px; }
       label { display: block; font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 8px; }
       
-      input, select { 
-        width: 100%; 
-        padding: 14px; 
-        border: 1px solid #cbd5e0; 
-        border-radius: 10px; 
-        box-sizing: border-box; 
-        font-size: 16px; 
-        color: var(--text);
-        background-color: #f8fafc;
-        transition: border-color 0.2s, box-shadow 0.2s;
+      input, select, textarea { 
+        width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 10px; box-sizing: border-box; 
+        font-size: 16px; color: var(--text); background-color: #f8fafc; transition: border-color 0.2s;
       }
-      input:focus, select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(14, 109, 100, 0.15); background-color: #fff; }
+      input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background-color: #fff; }
       
       .row { display: flex; gap: 15px; margin-bottom: 20px; }
       .col { flex: 1; }
       
-      /* SEÇÃO DE SUBSTITUIÇÃO */
       .troca-card { background: #fffaf0; border: 1px solid #feebc8; padding: 20px; border-radius: 12px; margin-top: 10px; }
       .troca-header { display: flex; justify-content: space-between; align-items: center; }
       .troca-header label { margin: 0; color: #dd6b20; font-size: 16px; }
-      
       .toggle-switch { display: flex; gap: 15px; }
       .toggle-switch label { display: flex; align-items: center; gap: 5px; font-weight: 500; margin: 0; cursor: pointer; color: #4a5568;}
-      .toggle-switch input { width: 18px; height: 18px; cursor: pointer; accent-color: #dd6b20; }
+      .toggle-switch input { width: 18px; height: 18px; accent-color: #dd6b20; }
 
-      /* BOTÕES */
       .btn-submit { 
-        background: var(--primary); color: white; border: none; padding: 18px; 
-        width: 100%; border-radius: 30px; font-size: 18px; font-weight: bold; 
-        cursor: pointer; margin-top: 30px; transition: background 0.2s; box-shadow: 0 4px 15px rgba(14, 109, 100, 0.3);
+        background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 30px; 
+        font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; box-shadow: 0 4px 15px rgba(14, 109, 100, 0.3);
       }
-      .btn-submit:active { transform: translateY(2px); }
       .btn-submit:disabled { background: #a0aec0; box-shadow: none; cursor: not-allowed; }
+      .btn-voltar { background: transparent; color: #718096; border: 1px solid #cbd5e0; padding: 12px; width: 100%; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
       
-      .btn-voltar {
-        background: transparent; color: #718096; border: 1px solid #cbd5e0; padding: 12px;
-        width: 100%; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;
-        margin-bottom: 20px; transition: 0.2s;
-      }
-      .btn-voltar:active { background: #edf2f7; }
-
       #mensagem { text-align: center; font-weight: bold; margin-top: 15px; font-size: 15px; }
-      
-      /* CONTROLE DE TELAS */
       .tela { display: none; }
       .tela.ativa { display: block; animation: fadeIn 0.4s ease; }
       @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -118,20 +63,18 @@
   </head>
   <body>
     <div class="app-container">
-      <div class="header">
-        LONA FORT EXPEDIÇÃO
-      </div>
+      <div class="header">ESTOQUE FRACIONADOS</div>
       
       <div class="content">
-        <!-- TELA 1: CÂMERA AUTOMÁTICA -->
+        <!-- TELA 1: CÂMERA -->
         <div id="tela-camera" class="tela ativa">
           <div id="reader"></div>
-          <div class="camera-loading" id="camera-status">Iniciando câmera inteligente...</div>
+          <div class="camera-loading" id="camera-status">Iniciando câmera...</div>
         </div>
 
-        <!-- TELA 2: FORMULÁRIO LIMPO -->
+        <!-- TELA 2: FORMULÁRIO -->
         <div id="tela-form" class="tela">
-          <button class="btn-voltar" onclick="reiniciarApp()">← Ler Outro Produto</button>
+          <button class="btn-voltar" onclick="reiniciarApp()">← Cancelar / Ler Outro</button>
 
           <div class="produto-card">
             <div class="produto-label">Material Identificado</div>
@@ -170,7 +113,7 @@
 
           <div class="form-group">
             <label>Pedido <span style="color:#e53e3e;">* (Mínimo 6 dígitos)</span></label>
-            <input type="number" id="pedido" placeholder="Digite os números do pedido">
+            <input type="number" id="pedido" placeholder="Ex: 123456">
           </div>
 
           <div class="row">
@@ -179,9 +122,14 @@
               <input type="text" id="nf" placeholder="Número da Nota">
             </div>
             <div class="col">
-              <label>O.C. (Opcional)</label>
-              <input type="text" id="oc" placeholder="Ordem de Compra">
+              <label>L.Ped / O.C. (Opcional)</label>
+              <input type="text" id="oc" placeholder="L.Ped ou O.C.">
             </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Responsável</label>
+            <input type="text" id="responsavel" placeholder="Quem está separando?">
           </div>
 
           <div class="troca-card">
@@ -192,10 +140,23 @@
                 <label><input type="radio" name="isTroca" value="nao" onchange="toggleTroca(false)" checked> Não</label>
               </div>
             </div>
-            <div id="campos-troca" style="display:none; margin-top:20px; border-top: 1px dashed #f6ad55; padding-top: 15px;">
-              <label>Pedido Inicial</label>
-              <input type="text" id="pedido-inicial" placeholder="Qual era o pedido original?">
+            <div id="campos-troca" style="display:none; margin-top:15px; border-top: 1px dashed #f6ad55; padding-top: 15px;">
+              <div class="row">
+                <div class="col">
+                  <label>Pedido Inicial</label>
+                  <input type="text" id="pedido-inicial" placeholder="Original">
+                </div>
+                <div class="col">
+                  <label>Tipo Metragem</label>
+                  <select id="tipoMet"><option value="LINEAR">LINEAR</option><option value="M²">M²</option></select>
+                </div>
+              </div>
             </div>
+          </div>
+          
+          <div class="form-group" style="margin-top: 20px;">
+            <label>Observação (Opcional)</label>
+            <textarea id="observacao" placeholder="Algum detalhe extra?"></textarea>
           </div>
 
           <button class="btn-submit" id="btn-enviar" onclick="enviarDados()">CONFIRMAR BAIXA</button>
@@ -211,24 +172,19 @@
 
       let html5QrCode;
 
-      // Inicia a câmera automaticamente ao abrir a página
-      window.onload = () => {
-        iniciarCamera();
-      };
+      window.onload = () => { iniciarCamera(); };
 
       function tocarBip() {
         try {
           let ctx = new (window.AudioContext || window.webkitAudioContext)();
           let osc = ctx.createOscillator();
           let gain = ctx.createGain();
-          osc.connect(gain);
-          gain.connect(ctx.destination);
+          osc.connect(gain); gain.connect(ctx.destination);
           osc.type = 'sine';
           osc.frequency.setValueAtTime(1200, ctx.currentTime); 
           gain.gain.setValueAtTime(1, ctx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-          osc.start(ctx.currentTime);
-          osc.stop(ctx.currentTime + 0.15);
+          osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.15);
         } catch (e) {}
         if(navigator.vibrate) navigator.vibrate(100);
       }
@@ -243,7 +199,7 @@
         ).then(() => {
           document.getElementById('camera-status').style.display = 'none';
         }).catch(err => { 
-          document.getElementById('camera-status').innerHTML = "Câmera bloqueada. Verifique as permissões do navegador."; 
+          document.getElementById('camera-status').innerHTML = "Câmera bloqueada. Dê permissão no navegador."; 
           document.getElementById('camera-status').style.color = "#e53e3e";
         });
       }
@@ -251,12 +207,9 @@
       function onScanSuccess(texto) {
         tocarBip();
         html5QrCode.stop();
-        
-        // Transição de tela
         document.getElementById('tela-camera').classList.remove('ativa');
         document.getElementById('tela-form').classList.add('ativa');
         
-        // Joga o texto em maiúsculo na tela
         let lido = texto.trim().toUpperCase();
         document.getElementById('produto-codigo').value = lido;
         document.getElementById('produto-display').innerText = lido;
@@ -284,46 +237,44 @@
           modalidade: document.getElementById('modalidade').value,
           pedido: document.getElementById('pedido').value.trim(),
           nf: document.getElementById('nf').value.trim(),
-          oc: document.getElementById('oc').value.trim(),
+          oc: document.getElementById('oc').value.trim(), // Mapeado na planilha como L.Ped/O.C.
+          responsavel: document.getElementById('responsavel').value.trim(),
           isTroca: document.querySelector('input[name="isTroca"]:checked').value,
-          pedidoInicial: document.getElementById('pedido-inicial').value.trim()
+          pedidoInicial: document.getElementById('pedido-inicial').value.trim(),
+          tipoMetragem: document.getElementById('tipoMet').value,
+          observacao: document.getElementById('observacao').value.trim()
         };
 
-        // VALIDAÇÕES RIGOROSAS
         if (!payload.modalidade) {
-          alert("Por favor, selecione uma Modalidade."); return;
+          alert("Selecione a Modalidade."); return;
         }
         if (!payload.pedido || payload.pedido.length < 6) {
           alert("O campo Pedido é obrigatório e deve conter no mínimo 6 números."); 
-          document.getElementById('pedido').focus();
-          return;
+          document.getElementById('pedido').focus(); return;
         }
 
-        btn.disabled = true; 
-        btn.innerText = "Enviando dados..."; 
-        msg.innerText = "";
+        btn.disabled = true; btn.innerText = "Enviando dados..."; msg.innerText = "";
         
-        fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
+        // A MÁGICA QUE RESOLVE O ERRO DE CONEXÃO: headers 'text/plain'
+        fetch(API_URL, { 
+          method: 'POST', 
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload) 
+        })
         .then(res => res.json())
         .then(res => {
           if(res.sucesso) {
             tocarBip(); 
-            msg.innerText = "✓ BAIXA FINALIZADA!"; 
-            msg.style.color = "#2e7d32";
-            btn.style.background = "#2e7d32";
-            btn.innerText = "SUCESSO";
+            msg.innerText = "✓ BAIXA FINALIZADA!"; msg.style.color = "#2e7d32";
+            btn.style.background = "#2e7d32"; btn.innerText = "SUCESSO";
             setTimeout(() => { location.reload(); }, 2000);
           } else {
-            msg.innerText = "Erro: " + res.erro; 
-            msg.style.color = "#e53e3e"; 
-            btn.disabled = false; 
-            btn.innerText = "Tentar Novamente";
+            msg.innerText = "Erro: " + res.erro; msg.style.color = "#e53e3e"; 
+            btn.disabled = false; btn.innerText = "Tentar Novamente";
           }
         }).catch(err => { 
-          msg.innerText = "Erro de conexão (Sem internet)."; 
-          msg.style.color = "#e53e3e"; 
-          btn.disabled = false; 
-          btn.innerText = "Tentar Novamente"; 
+          msg.innerText = "Erro de conexão ao salvar."; msg.style.color = "#e53e3e"; 
+          btn.disabled = false; btn.innerText = "Tentar Novamente"; 
         });
       }
     </script>
