@@ -20,57 +20,28 @@
       
       .app-container { background: white; width: 100%; max-width: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; position: relative; }
       
-      /* CABEÇALHO COM A LOGO */
       .header { background-color: var(--primary); color: white; padding: 25px 20px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
       .header-logo { max-height: 60px; display: block; margin: 0 auto 12px; object-fit: contain; }
       .header-title { font-size: 16px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0; }
       
       .content { padding: 30px 24px; flex: 1; display: flex; flex-direction: column; }
       
-      /* CÂMERA */
       #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: none; }
       .camera-loading { text-align: center; color: #718096; margin-top: 20px; font-weight: 500; font-size: 14px; }
 
-      /* PRODUTO CARD - MAIOR E CENTRALIZADO */
-      .produto-card { 
-        background: #e6f4f1; 
-        border: 2px solid var(--primary); 
-        padding: 30px 20px; 
-        border-radius: 12px; 
-        margin-bottom: 30px; 
-        box-shadow: 0 8px 20px rgba(14, 109, 100, 0.15); 
-        text-align: center; 
-      }
-      .produto-label { 
-        font-size: 14px; 
-        color: var(--primary-dark); 
-        text-transform: uppercase; 
-        font-weight: 800; 
-        letter-spacing: 1.5px; 
-        margin-bottom: 12px; 
-      }
-      .produto-nome { 
-        font-size: 28px; 
-        color: var(--primary-dark); 
-        font-weight: 900; 
-        margin: 0; 
-        word-break: break-word; 
-      }
+      .produto-card { background: #e6f4f1; border: 2px solid var(--primary); padding: 30px 20px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(14, 109, 100, 0.15); text-align: center; }
+      .produto-label { font-size: 14px; color: var(--primary-dark); text-transform: uppercase; font-weight: 800; letter-spacing: 1.5px; margin-bottom: 12px; }
+      .produto-nome { font-size: 28px; color: var(--primary-dark); font-weight: 900; margin: 0; word-break: break-word; }
 
-      /* FORMULÁRIO */
       .form-group { margin-bottom: 20px; }
       label { display: block; font-weight: 600; font-size: 13px; color: #4a5568; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
       
-      input, select, textarea { 
-        width: 100%; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; 
-        font-size: 16px; color: var(--text); background-color: #fcfcfc; transition: all 0.3s ease;
-      }
+      input, select, textarea { width: 100%; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; font-size: 16px; color: var(--text); background-color: #fcfcfc; transition: all 0.3s ease; }
       input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(14, 109, 100, 0.1); outline: none; background-color: #fff; }
       
       .row { display: flex; gap: 15px; margin-bottom: 20px; }
       .col { flex: 1; }
       
-      /* TROCA */
       .troca-card { background: #fffaf0; border: 1px solid #feebc8; padding: 20px; border-radius: 8px; margin-top: 10px; }
       .troca-header { display: flex; justify-content: space-between; align-items: center; }
       .troca-header label { margin: 0; color: #c05621; font-size: 14px; }
@@ -78,11 +49,7 @@
       .toggle-switch label { display: flex; align-items: center; gap: 6px; font-weight: 600; margin: 0; cursor: pointer; color: #4a5568; text-transform: none;}
       .toggle-switch input { width: 18px; height: 18px; accent-color: #dd6b20; cursor: pointer; }
 
-      /* BOTÕES */
-      .btn-submit { 
-        background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; 
-        font-size: 16px; font-weight: 700; letter-spacing: 1px; cursor: pointer; margin-top: 20px; transition: all 0.3s;
-      }
+      .btn-submit { background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: 700; letter-spacing: 1px; cursor: pointer; margin-top: 20px; transition: all 0.3s; }
       .btn-submit:active { transform: translateY(2px); }
       .btn-submit:disabled { background: #a0aec0; cursor: not-allowed; transform: none; }
       
@@ -91,17 +58,14 @@
       
       #mensagem { text-align: center; font-weight: 600; margin-top: 15px; font-size: 14px; }
       
-      /* TELAS E ANIMAÇÕES */
       .tela { display: none; }
       .tela.ativa { display: block; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
       @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-      /* TELA DE SUCESSO EXCLUSIVA */
       #tela-sucesso { text-align: center; padding-top: 40px; }
       .sucesso-titulo { color: #2e7d32; font-size: 24px; font-weight: 800; margin-top: 20px; margin-bottom: 10px; }
       .sucesso-texto { color: #718096; font-size: 15px; margin-bottom: 40px; line-height: 1.5; }
       
-      /* ANIMAÇÃO DO CHECK */
       .checkmark-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
       .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 10% auto; box-shadow: inset 0px 0px 0px #2e7d32; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
       .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 3; stroke-miterlimit: 10; stroke: #2e7d32; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
@@ -114,7 +78,6 @@
   <body>
     <div class="app-container">
       <div class="header">
-        <!-- LOGO DA EMPRESA PELO GOOGLE DRIVE -->
         <img src="https://drive.google.com/uc?export=view&id=1rBz6z660wObQcNU0E--LmhoKw2redIRX" alt="Logo Lona Fort" class="header-logo" onerror="this.style.display='none'">
         <h1 class="header-title">ESTOQUE FRACIONADOS</h1>
       </div>
@@ -130,7 +93,6 @@
         <div id="tela-form" class="tela">
           <button class="btn-voltar" onclick="reiniciarApp()">VOLTAR PARA CÂMERA</button>
 
-          <!-- PRODUTO EM DESTAQUE GIGANTE E CENTRALIZADO -->
           <div class="produto-card">
             <div class="produto-label">Material Identificado</div>
             <div class="produto-nome" id="produto-display">Aguardando...</div>
@@ -203,7 +165,10 @@
                 </div>
                 <div class="col">
                   <label>Metragem</label>
-                  <select id="tipoMet"><option value="LINEAR">LINEAR</option><option value="M²">M²</option></select>
+                  <select id="tipoMet">
+                    <option value="LINEAR">LINEAR</option>
+                    <option value="M²">M²</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -235,7 +200,7 @@
     </div>
 
     <script>
-      // O LINK DO SEU SCRIPT JÁ ESTÁ AQUI
+      // O LINK ESPECÍFICO QUE VOCÊ SOLICITOU
       const API_URL = "https://script.google.com/macros/s/AKfycbwTJF4o1l_zWneAa8oFuxkFn5k-75R4U9kE6n_-oEQW-7_xhX-MC-kAx6wBCpXeubsdlw/exec";
 
       let html5QrCode;
@@ -276,7 +241,6 @@
         tocarBip();
         html5QrCode.stop();
         
-        // Transição Câmera -> Form
         document.getElementById('tela-camera').classList.remove('ativa');
         document.getElementById('tela-form').classList.add('ativa');
         
@@ -286,7 +250,6 @@
       }
 
       function reiniciarApp() {
-        // Reseta tudo
         document.getElementById('quantidade').value = 1;
         document.getElementById('modalidade').selectedIndex = 0;
         document.getElementById('pedido').value = '';
@@ -304,7 +267,6 @@
         btn.disabled = false;
         document.getElementById('mensagem').innerText = '';
         
-        // Transição Sucesso/Form -> Câmera
         document.getElementById('tela-sucesso').classList.remove('ativa');
         document.getElementById('tela-form').classList.remove('ativa');
         document.getElementById('tela-camera').classList.add('ativa');
@@ -354,7 +316,6 @@
         })
         .then(() => {
           tocarBip(); 
-          // Transição Form -> Sucesso
           document.getElementById('tela-form').classList.remove('ativa');
           document.getElementById('tela-sucesso').classList.add('ativa');
         })
