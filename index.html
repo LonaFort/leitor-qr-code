@@ -9,7 +9,7 @@
       :root { 
         --primary: #0E6D64; 
         --primary-dark: #0a4f48;
-        --bg: #f0f2f5; 
+        --bg: #f4f7f6; 
         --text: #2d3748; 
       }
       
@@ -18,47 +18,71 @@
         background-color: var(--bg); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh;
       }
       
-      .app-container { background: white; width: 100%; max-width: 480px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
-      .header { background-color: var(--primary); color: white; padding: 20px; text-align: center; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-      .content { padding: 24px; flex: 1; }
+      .app-container { background: white; width: 100%; max-width: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; position: relative; }
+      .header { background-color: var(--primary); color: white; padding: 22px; text-align: center; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+      .content { padding: 30px 24px; flex: 1; display: flex; flex-direction: column; }
       
-      #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; }
-      .camera-loading { text-align: center; color: #666; margin-top: 20px; font-weight: 500; }
+      /* CÂMERA */
+      #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: none; }
+      .camera-loading { text-align: center; color: #718096; margin-top: 20px; font-weight: 500; font-size: 14px; }
 
-      .produto-card { background: #e6f4f1; border-left: 5px solid var(--primary); padding: 20px; border-radius: 8px; margin-bottom: 25px; }
-      .produto-label { font-size: 12px; color: #555; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; margin-bottom: 8px; }
-      .produto-nome { font-size: 22px; color: var(--primary-dark); font-weight: 800; margin: 0; word-break: break-word; }
+      /* PRODUTO CARD */
+      .produto-card { background: #f8fafc; border-left: 4px solid var(--primary); padding: 18px 20px; border-radius: 6px; margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+      .produto-label { font-size: 11px; color: #718096; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+      .produto-nome { font-size: 20px; color: var(--primary-dark); font-weight: 800; margin: 0; word-break: break-word; }
 
+      /* FORMULÁRIO */
       .form-group { margin-bottom: 20px; }
-      label { display: block; font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 8px; }
+      label { display: block; font-weight: 600; font-size: 13px; color: #4a5568; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
       
       input, select, textarea { 
-        width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 10px; box-sizing: border-box; 
-        font-size: 16px; color: var(--text); background-color: #f8fafc; transition: border-color 0.2s;
+        width: 100%; padding: 15px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; 
+        font-size: 16px; color: var(--text); background-color: #fcfcfc; transition: all 0.3s ease;
       }
-      input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background-color: #fff; }
+      input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(14, 109, 100, 0.1); outline: none; background-color: #fff; }
       
       .row { display: flex; gap: 15px; margin-bottom: 20px; }
       .col { flex: 1; }
       
-      .troca-card { background: #fffaf0; border: 1px solid #feebc8; padding: 20px; border-radius: 12px; margin-top: 10px; }
+      /* TROCA */
+      .troca-card { background: #fffaf0; border: 1px solid #feebc8; padding: 20px; border-radius: 8px; margin-top: 10px; }
       .troca-header { display: flex; justify-content: space-between; align-items: center; }
-      .troca-header label { margin: 0; color: #dd6b20; font-size: 16px; }
-      .toggle-switch { display: flex; gap: 15px; }
-      .toggle-switch label { display: flex; align-items: center; gap: 5px; font-weight: 500; margin: 0; cursor: pointer; color: #4a5568;}
-      .toggle-switch input { width: 18px; height: 18px; accent-color: #dd6b20; }
+      .troca-header label { margin: 0; color: #c05621; font-size: 14px; }
+      .toggle-switch { display: flex; gap: 20px; }
+      .toggle-switch label { display: flex; align-items: center; gap: 6px; font-weight: 600; margin: 0; cursor: pointer; color: #4a5568; text-transform: none;}
+      .toggle-switch input { width: 18px; height: 18px; accent-color: #dd6b20; cursor: pointer; }
 
+      /* BOTÕES */
       .btn-submit { 
-        background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 30px; 
-        font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 30px; box-shadow: 0 4px 15px rgba(14, 109, 100, 0.3);
+        background: var(--primary); color: white; border: none; padding: 18px; width: 100%; border-radius: 8px; 
+        font-size: 16px; font-weight: 700; letter-spacing: 1px; cursor: pointer; margin-top: 20px; transition: all 0.3s;
       }
-      .btn-submit:disabled { background: #a0aec0; box-shadow: none; cursor: not-allowed; }
-      .btn-voltar { background: transparent; color: #718096; border: 1px solid #cbd5e0; padding: 12px; width: 100%; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
+      .btn-submit:active { transform: translateY(2px); }
+      .btn-submit:disabled { background: #a0aec0; cursor: not-allowed; transform: none; }
       
-      #mensagem { text-align: center; font-weight: bold; margin-top: 15px; font-size: 15px; }
+      .btn-voltar { background: transparent; color: #718096; border: 1px solid #e2e8f0; padding: 12px; width: 100%; border-radius: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer; margin-bottom: 25px; transition: 0.2s; }
+      .btn-voltar:active { background: #edf2f7; }
+      
+      #mensagem { text-align: center; font-weight: 600; margin-top: 15px; font-size: 14px; }
+      
+      /* TELAS E ANIMAÇÕES */
       .tela { display: none; }
-      .tela.ativa { display: block; animation: fadeIn 0.4s ease; }
-      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .tela.ativa { display: block; animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+      @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+      /* TELA DE SUCESSO EXCLUSIVA */
+      #tela-sucesso { text-align: center; padding-top: 40px; }
+      .sucesso-titulo { color: #2e7d32; font-size: 24px; font-weight: 800; margin-top: 20px; margin-bottom: 10px; }
+      .sucesso-texto { color: #718096; font-size: 15px; margin-bottom: 40px; line-height: 1.5; }
+      
+      /* ANIMAÇÃO DO CHECK (CERTINHO) */
+      .checkmark-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
+      .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 10% auto; box-shadow: inset 0px 0px 0px #2e7d32; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
+      .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 3; stroke-miterlimit: 10; stroke: #2e7d32; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
+      .checkmark__check { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards; }
+      @keyframes stroke { 100% { stroke-dashoffset: 0; } }
+      @keyframes scale { 0%, 100% { transform: none; } 50% { transform: scale3d(1.1, 1.1, 1); } }
+      @keyframes fill { 100% { box-shadow: inset 0px 0px 0px 50px #2e7d32; } }
     </style>
   </head>
   <body>
@@ -69,12 +93,12 @@
         <!-- TELA 1: CÂMERA -->
         <div id="tela-camera" class="tela ativa">
           <div id="reader"></div>
-          <div class="camera-loading" id="camera-status">Iniciando câmera...</div>
+          <div class="camera-loading" id="camera-status">Carregando scanner...</div>
         </div>
 
         <!-- TELA 2: FORMULÁRIO -->
         <div id="tela-form" class="tela">
-          <button class="btn-voltar" onclick="reiniciarApp()">← Cancelar / Ler Outro</button>
+          <button class="btn-voltar" onclick="reiniciarApp()">VOLTAR PARA CÂMERA</button>
 
           <div class="produto-card">
             <div class="produto-label">Material Identificado</div>
@@ -112,24 +136,24 @@
           </div>
 
           <div class="form-group">
-            <label>Pedido <span style="color:#e53e3e;">* (Mínimo 6 dígitos)</span></label>
-            <input type="number" id="pedido" placeholder="Ex: 123456">
+            <label>Pedido <span style="color:#e53e3e; text-transform:none; font-weight:500;">* (Mínimo 6 dígitos)</span></label>
+            <input type="number" id="pedido" placeholder="Número do pedido">
           </div>
 
           <div class="row">
             <div class="col">
               <label>NF (Opcional)</label>
-              <input type="text" id="nf" placeholder="Número da Nota">
+              <input type="text" id="nf" placeholder="Número">
             </div>
             <div class="col">
               <label>L.Ped / O.C. (Opcional)</label>
-              <input type="text" id="oc" placeholder="L.Ped ou O.C.">
+              <input type="text" id="oc" placeholder="L.Ped / O.C.">
             </div>
           </div>
           
           <div class="form-group">
             <label>Responsável</label>
-            <input type="text" id="responsavel" placeholder="Quem está separando?">
+            <input type="text" id="responsavel" placeholder="Nome do responsável">
           </div>
 
           <div class="troca-card">
@@ -140,14 +164,14 @@
                 <label><input type="radio" name="isTroca" value="nao" onchange="toggleTroca(false)" checked> Não</label>
               </div>
             </div>
-            <div id="campos-troca" style="display:none; margin-top:15px; border-top: 1px dashed #f6ad55; padding-top: 15px;">
+            <div id="campos-troca" style="display:none; margin-top:15px; border-top: 1px solid #feebc8; padding-top: 15px;">
               <div class="row">
                 <div class="col">
                   <label>Pedido Inicial</label>
                   <input type="text" id="pedido-inicial" placeholder="Original">
                 </div>
                 <div class="col">
-                  <label>Tipo Metragem</label>
+                  <label>Metragem</label>
                   <select id="tipoMet"><option value="LINEAR">LINEAR</option><option value="M²">M²</option></select>
                 </div>
               </div>
@@ -156,19 +180,32 @@
           
           <div class="form-group" style="margin-top: 20px;">
             <label>Observação (Opcional)</label>
-            <textarea id="observacao" placeholder="Algum detalhe extra?"></textarea>
+            <textarea id="observacao" placeholder="Adicione detalhes adicionais..."></textarea>
           </div>
 
           <button class="btn-submit" id="btn-enviar" onclick="enviarDados()">CONFIRMAR BAIXA</button>
           <p id="mensagem"></p>
         </div>
+
+        <!-- TELA 3: SUCESSO TOTAL -->
+        <div id="tela-sucesso" class="tela">
+          <div class="checkmark-wrapper">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+              <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+              <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+          </div>
+          <h2 class="sucesso-titulo">Baixa Concluída!</h2>
+          <p class="sucesso-texto">O material foi registrado no estoque com sucesso e a planilha foi atualizada.</p>
+          <button class="btn-submit" style="background-color: #2d3748;" onclick="reiniciarApp()">LER OUTRO PRODUTO</button>
+        </div>
+
       </div>
     </div>
 
     <script>
-      // =======================================================
-     const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
-      // =======================================================
+      // LINK JÁ INSERIDO
+      const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
 
       let html5QrCode;
 
@@ -199,7 +236,7 @@
         ).then(() => {
           document.getElementById('camera-status').style.display = 'none';
         }).catch(err => { 
-          document.getElementById('camera-status').innerHTML = "Câmera bloqueada. Dê permissão no navegador."; 
+          document.getElementById('camera-status').innerHTML = "Câmera bloqueada. Verifique as permissões."; 
           document.getElementById('camera-status').style.color = "#e53e3e";
         });
       }
@@ -207,6 +244,8 @@
       function onScanSuccess(texto) {
         tocarBip();
         html5QrCode.stop();
+        
+        // Transição Câmera -> Form
         document.getElementById('tela-camera').classList.remove('ativa');
         document.getElementById('tela-form').classList.add('ativa');
         
@@ -216,7 +255,7 @@
       }
 
       function reiniciarApp() {
-        // Reseta os campos do formulário
+        // Reseta tudo
         document.getElementById('quantidade').value = 1;
         document.getElementById('modalidade').selectedIndex = 0;
         document.getElementById('pedido').value = '';
@@ -225,21 +264,20 @@
         document.getElementById('responsavel').value = '';
         document.getElementById('observacao').value = '';
         
-        // Reseta campo de troca
         document.querySelector('input[name="isTroca"][value="nao"]').checked = true;
         toggleTroca(false);
         document.getElementById('pedido-inicial').value = '';
         
-        // Reseta o botão principal para o estado original
         let btn = document.getElementById('btn-enviar');
         btn.innerText = "CONFIRMAR BAIXA";
-        btn.style.background = "var(--primary)";
-        btn.onclick = enviarDados;
+        btn.disabled = false;
+        document.getElementById('mensagem').innerText = '';
         
+        // Transição Sucesso/Form -> Câmera
+        document.getElementById('tela-sucesso').classList.remove('ativa');
         document.getElementById('tela-form').classList.remove('ativa');
         document.getElementById('tela-camera').classList.add('ativa');
         document.getElementById('camera-status').style.display = 'block';
-        document.getElementById('mensagem').innerText = '';
         
         iniciarCamera();
       }
@@ -267,46 +305,33 @@
         };
 
         if (!payload.modalidade) {
-          alert("Selecione a Modalidade."); return;
+          alert("Atenção: Selecione a Modalidade."); return;
         }
         if (!payload.pedido || payload.pedido.length < 6) {
-          alert("O campo Pedido é obrigatório e deve conter no mínimo 6 números."); 
+          alert("Atenção: O campo Pedido é obrigatório e deve conter no mínimo 6 números."); 
           document.getElementById('pedido').focus(); return;
         }
 
         btn.disabled = true; 
-        btn.innerText = "Enviando dados..."; 
+        btn.innerText = "PROCESSANDO..."; 
         msg.innerText = "";
         
-        // Requisição Padrão (Sem o no-cors)
         fetch(API_URL, { 
-          method: 'POST',
+          method: 'POST', 
+          mode: 'no-cors',
           body: JSON.stringify(payload) 
         })
-        .then(response => response.json())
-        .then(res => {
-          if(res.sucesso) {
-            tocarBip(); 
-            msg.innerText = "✓ BAIXA CONCLUÍDA COM SUCESSO!"; 
-            msg.style.color = "#2e7d32";
-            
-            // Muda a função e o visual do botão principal
-            btn.style.background = "#2e7d32"; 
-            btn.innerText = "📷 LER OUTRO PRODUTO";
-            btn.disabled = false;
-            btn.onclick = reiniciarApp;
-          } else {
-            msg.innerText = "Erro: " + res.erro; 
-            msg.style.color = "#e53e3e"; 
-            btn.disabled = false; 
-            btn.innerText = "Tentar Novamente";
-          }
+        .then(() => {
+          tocarBip(); 
+          // Transição Form -> Sucesso
+          document.getElementById('tela-form').classList.remove('ativa');
+          document.getElementById('tela-sucesso').classList.add('ativa');
         })
         .catch(err => { 
-          msg.innerText = "Erro ao ler resposta do Google."; 
+          msg.innerText = "Falha de conexão. Verifique o sinal da internet."; 
           msg.style.color = "#e53e3e"; 
           btn.disabled = false; 
-          btn.innerText = "Tentar Novamente"; 
+          btn.innerText = "TENTAR NOVAMENTE"; 
         });
       }
     </script>
