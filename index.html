@@ -73,13 +73,11 @@
       </div>
       
       <div class="content">
-        <!-- TELA 1: CÂMERA -->
         <div id="tela-camera" class="tela ativa">
           <div id="reader"></div>
           <div class="camera-loading" id="camera-status">Carregando scanner...</div>
         </div>
 
-        <!-- TELA 2: FORMULÁRIO -->
         <div id="tela-form" class="tela">
           <button class="btn-voltar" onclick="reiniciarApp()">VOLTAR PARA CÂMERA</button>
 
@@ -173,7 +171,6 @@
           <p id="mensagem"></p>
         </div>
 
-        <!-- TELA 3: SUCESSO TOTAL -->
         <div id="tela-sucesso" class="tela">
           <div class="checkmark-wrapper">
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -190,9 +187,13 @@
     </div>
 
     <script>
-      const API_URL = "https://script.google.com/macros/s/AKfycbyK-WRARF9Ofq5N1PTcO1YCq6_ghmp8JFxQqFtSih0_4ckZ2qVpPndRVsu348WUUP6olA/exec";
+      // ========================================================
+      // COLE SEU LINK NOVO AQUI DENTRO (Apague este e cole o seu)
+      const API_URL = "COLE_AQUI_O_SEU_LINK_NOVO_GERADO";
+      // ========================================================
 
       let html5QrCode;
+
       window.onload = () => { iniciarCamera(); };
 
       function tocarBip() {
@@ -228,6 +229,7 @@
       function onScanSuccess(texto) {
         tocarBip();
         html5QrCode.stop();
+        
         document.getElementById('tela-camera').classList.remove('ativa');
         document.getElementById('tela-form').classList.add('ativa');
         
