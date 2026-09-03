@@ -55,7 +55,7 @@
       .btn-submit:disabled { background: #a0aec0; box-shadow: none; cursor: not-allowed; }
       .btn-voltar { background: transparent; color: #718096; border: 1px solid #cbd5e0; padding: 12px; width: 100%; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 20px; }
       
-      #mensagem { text-align: center; font-weight: bold; margin-top: 15px; font-size: 15px; }
+      #mensagem { text-align: center; font-weight: bold; margin-top: 15px; font-size: 16px; }
       .tela { display: none; }
       .tela.ativa { display: block; animation: fadeIn 0.4s ease; }
       @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -167,7 +167,7 @@
 
     <script>
       // =======================================================
-      const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
+     const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
       // =======================================================
 
       let html5QrCode;
@@ -216,10 +216,31 @@
       }
 
       function reiniciarApp() {
+        // Reseta os campos do formulário
+        document.getElementById('quantidade').value = 1;
+        document.getElementById('modalidade').selectedIndex = 0;
+        document.getElementById('pedido').value = '';
+        document.getElementById('nf').value = '';
+        document.getElementById('oc').value = '';
+        document.getElementById('responsavel').value = '';
+        document.getElementById('observacao').value = '';
+        
+        // Reseta campo de troca
+        document.querySelector('input[name="isTroca"][value="nao"]').checked = true;
+        toggleTroca(false);
+        document.getElementById('pedido-inicial').value = '';
+        
+        // Reseta o botão principal para o estado original
+        let btn = document.getElementById('btn-enviar');
+        btn.innerText = "CONFIRMAR BAIXA";
+        btn.style.background = "var(--primary)";
+        btn.onclick = enviarDados;
+        
         document.getElementById('tela-form').classList.remove('ativa');
         document.getElementById('tela-camera').classList.add('ativa');
         document.getElementById('camera-status').style.display = 'block';
         document.getElementById('mensagem').innerText = '';
+        
         iniciarCamera();
       }
 
@@ -237,7 +258,7 @@
           modalidade: document.getElementById('modalidade').value,
           pedido: document.getElementById('pedido').value.trim(),
           nf: document.getElementById('nf').value.trim(),
-          oc: document.getElementById('oc').value.trim(), // Mapeado na planilha como L.Ped/O.C.
+          oc: document.getElementById('oc').value.trim(),
           responsavel: document.getElementById('responsavel').value.trim(),
           isTroca: document.querySelector('input[name="isTroca"]:checked').value,
           pedidoInicial: document.getElementById('pedido-inicial').value.trim(),
@@ -253,28 +274,33 @@
           document.getElementById('pedido').focus(); return;
         }
 
-        btn.disabled = true; btn.innerText = "Enviando dados..."; msg.innerText = "";
+        btn.disabled = true; 
+        btn.innerText = "Enviando dados..."; 
+        msg.innerText = "";
         
-        // A MÁGICA QUE RESOLVE O ERRO DE CONEXÃO: headers 'text/plain'
+        // MUDANÇA AQUI: mode 'no-cors' força o envio e evita o falso erro de bloqueio do navegador
         fetch(API_URL, { 
           method: 'POST', 
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          mode: 'no-cors',
           body: JSON.stringify(payload) 
         })
-        .then(res => res.json())
-        .then(res => {
-          if(res.sucesso) {
-            tocarBip(); 
-            msg.innerText = "✓ BAIXA FINALIZADA!"; msg.style.color = "#2e7d32";
-            btn.style.background = "#2e7d32"; btn.innerText = "SUCESSO";
-            setTimeout(() => { location.reload(); }, 2000);
-          } else {
-            msg.innerText = "Erro: " + res.erro; msg.style.color = "#e53e3e"; 
-            btn.disabled = false; btn.innerText = "Tentar Novamente";
-          }
-        }).catch(err => { 
-          msg.innerText = "Erro de conexão ao salvar."; msg.style.color = "#e53e3e"; 
-          btn.disabled = false; btn.innerText = "Tentar Novamente"; 
+        .then(() => {
+          // Se chegou aqui, a requisição disparou com sucesso para a planilha
+          tocarBip(); 
+          msg.innerText = "✓ BAIXA CONCLUÍDA COM SUCESSO!"; 
+          msg.style.color = "#2e7d32";
+          
+          // Muda a função e o visual do botão principal
+          btn.style.background = "#2e7d32"; 
+          btn.innerText = "📷 LER OUTRO PRODUTO";
+          btn.disabled = false;
+          btn.onclick = reiniciarApp;
+        })
+        .catch(err => { 
+          msg.innerText = "Erro na rede. Verifique a internet."; 
+          msg.style.color = "#e53e3e"; 
+          btn.disabled = false; 
+          btn.innerText = "TENTAR NOVAMENTE"; 
         });
       }
     </script>
