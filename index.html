@@ -19,17 +19,43 @@
       }
       
       .app-container { background: white; width: 100%; max-width: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; position: relative; }
-      .header { background-color: var(--primary); color: white; padding: 22px; text-align: center; font-size: 16px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+      
+      /* CABEÇALHO COM A LOGO */
+      .header { background-color: var(--primary); color: white; padding: 25px 20px 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+      .header-logo { max-height: 60px; display: block; margin: 0 auto 12px; object-fit: contain; }
+      .header-title { font-size: 16px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin: 0; }
+      
       .content { padding: 30px 24px; flex: 1; display: flex; flex-direction: column; }
       
       /* CÂMERA */
       #reader { width: 100%; border-radius: 12px; overflow: hidden; background: #000; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: none; }
       .camera-loading { text-align: center; color: #718096; margin-top: 20px; font-weight: 500; font-size: 14px; }
 
-      /* PRODUTO CARD */
-      .produto-card { background: #f8fafc; border-left: 4px solid var(--primary); padding: 18px 20px; border-radius: 6px; margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-      .produto-label { font-size: 11px; color: #718096; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
-      .produto-nome { font-size: 20px; color: var(--primary-dark); font-weight: 800; margin: 0; word-break: break-word; }
+      /* PRODUTO CARD - MAIOR E CENTRALIZADO */
+      .produto-card { 
+        background: #e6f4f1; 
+        border: 2px solid var(--primary); 
+        padding: 30px 20px; 
+        border-radius: 12px; 
+        margin-bottom: 30px; 
+        box-shadow: 0 8px 20px rgba(14, 109, 100, 0.15); 
+        text-align: center; 
+      }
+      .produto-label { 
+        font-size: 14px; 
+        color: var(--primary-dark); 
+        text-transform: uppercase; 
+        font-weight: 800; 
+        letter-spacing: 1.5px; 
+        margin-bottom: 12px; 
+      }
+      .produto-nome { 
+        font-size: 28px; 
+        color: var(--primary-dark); 
+        font-weight: 900; 
+        margin: 0; 
+        word-break: break-word; 
+      }
 
       /* FORMULÁRIO */
       .form-group { margin-bottom: 20px; }
@@ -75,7 +101,7 @@
       .sucesso-titulo { color: #2e7d32; font-size: 24px; font-weight: 800; margin-top: 20px; margin-bottom: 10px; }
       .sucesso-texto { color: #718096; font-size: 15px; margin-bottom: 40px; line-height: 1.5; }
       
-      /* ANIMAÇÃO DO CHECK (CERTINHO) */
+      /* ANIMAÇÃO DO CHECK */
       .checkmark-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
       .checkmark { width: 80px; height: 80px; border-radius: 50%; display: block; stroke-width: 3; stroke: #fff; stroke-miterlimit: 10; margin: 10% auto; box-shadow: inset 0px 0px 0px #2e7d32; animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both; }
       .checkmark__circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 3; stroke-miterlimit: 10; stroke: #2e7d32; fill: none; animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
@@ -87,7 +113,11 @@
   </head>
   <body>
     <div class="app-container">
-      <div class="header">ESTOQUE FRACIONADOS</div>
+      <div class="header">
+        <!-- LOGO DA EMPRESA PELO GOOGLE DRIVE -->
+        <img src="https://drive.google.com/uc?export=view&id=1rBz6z660wObQcNU0E--LmhoKw2redIRX" alt="Logo Lona Fort" class="header-logo" onerror="this.style.display='none'">
+        <h1 class="header-title">ESTOQUE FRACIONADOS</h1>
+      </div>
       
       <div class="content">
         <!-- TELA 1: CÂMERA -->
@@ -100,6 +130,7 @@
         <div id="tela-form" class="tela">
           <button class="btn-voltar" onclick="reiniciarApp()">VOLTAR PARA CÂMERA</button>
 
+          <!-- PRODUTO EM DESTAQUE GIGANTE E CENTRALIZADO -->
           <div class="produto-card">
             <div class="produto-label">Material Identificado</div>
             <div class="produto-nome" id="produto-display">Aguardando...</div>
@@ -204,7 +235,7 @@
     </div>
 
     <script>
-      // LINK JÁ INSERIDO
+      // O LINK DO SEU SCRIPT JÁ ESTÁ AQUI
       const API_URL = "https://script.google.com/macros/s/AKfycbz3-20YlZuS_oeIqG5hCxQIwP4muBDvpLO0QzRMMUloClCbur2HzvBPGSh2D5d7qqmjqA/exec";
 
       let html5QrCode;
