@@ -117,8 +117,8 @@
           </div>
 
           <div class="form-group">
-            <label>Pedido <span style="color:#e53e3e; text-transform:none; font-weight:500;">* (Mínimo 6 dígitos)</span></label>
-            <input type="number" id="pedido" placeholder="Número do pedido">
+            <label>Pedido <span style="color:#e53e3e; text-transform:none; font-weight:500;">* (Mínimo 6 caracteres)</span></label>
+            <input type="text" id="pedido" placeholder="Ex: ABC123">
           </div>
 
           <div class="row">
@@ -187,13 +187,9 @@
     </div>
 
     <script>
-      // ========================================================
-      // COLE SEU LINK NOVO AQUI DENTRO (Apague este e cole o seu)
       const API_URL = "https://script.google.com/macros/s/AKfycbyK-WRARF9Ofq5N1PTcO1YCq6_ghmp8JFxQqFtSih0_4ckZ2qVpPndRVsu348WUUP6olA/exec";
-      // ========================================================
 
       let html5QrCode;
-
       window.onload = () => { iniciarCamera(); };
 
       function tocarBip() {
@@ -229,7 +225,6 @@
       function onScanSuccess(texto) {
         tocarBip();
         html5QrCode.stop();
-        
         document.getElementById('tela-camera').classList.remove('ativa');
         document.getElementById('tela-form').classList.add('ativa');
         
@@ -290,7 +285,7 @@
           alert("Atenção: Selecione a Modalidade."); return;
         }
         if (!payload.pedido || payload.pedido.length < 6) {
-          alert("Atenção: O campo Pedido é obrigatório e deve conter no mínimo 6 números."); 
+          alert("Atenção: O campo Pedido é obrigatório e deve conter no mínimo 6 caracteres."); 
           document.getElementById('pedido').focus(); return;
         }
 
